@@ -1,4 +1,3 @@
-from json import tool
 import pygame
 from settings import *
 from support import *
