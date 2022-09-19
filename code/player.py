@@ -47,18 +47,27 @@ class Player(pygame.sprite.Sprite):
         # Vertical Movement
         if keys[pygame.K_UP]:
             self.direction.y = -1
+            self.status='up'
         elif keys[pygame.K_DOWN]:
             self.direction.y = 1
+            self.status='down'
         else:
             self.direction.y = 0
 
         # Horizontal Movement
         if keys[pygame.K_LEFT]:
             self.direction.x = -1
+            self.status='left'
         elif keys[pygame.K_RIGHT]:
             self.direction.x = 1
+            self.status='right'
         else:
             self.direction.x=0
+
+    def get_status(self):
+        # If the player is not moving -> add_idle to status
+        if self.direction.magnitude() == 0:
+            self.status = self.status.split('_')[0] + '_idle' # to prevent: down_idle_idle_...
 
     def move(self, dt):
         # Normalize (to avoid be faster when going diagonal)
@@ -75,5 +84,6 @@ class Player(pygame.sprite.Sprite):
         
     def update(self, dt):
         self.input()
+        self.get_status()
         self.move(dt)
         self.animate(dt)
