@@ -31,7 +31,16 @@ class Player(pygame.sprite.Sprite):
 
         print(self.animations)
 
+    def animate(self, dt):
+        # This iterate images in folder to animate the status
+        self.frame_index += 4*dt 
 
+        # If we finish the images we re-iterate from zero
+        if self.frame_index >= len(self.animations[self.status]):
+            self.frame_index = 0
+        
+        self.image = self.animations[self.status][int(self.frame_index)]
+    
     def input(self):
         keys = pygame.key.get_pressed() # returns the list of pressed keys 
         
@@ -67,3 +76,4 @@ class Player(pygame.sprite.Sprite):
     def update(self, dt):
         self.input()
         self.move(dt)
+        self.animate(dt)
