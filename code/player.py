@@ -15,7 +15,8 @@ class Player(pygame.sprite.Sprite):
         # the image has to be some kind of surface
         self.image = self.animations[self.status][self.frame_index]
         self.rect = self.image.get_rect(center=pos)
-    
+        self.z = LAYERS['main']
+        
         # movement attributes
         self.direction = pygame.math.Vector2()
         self.pos = pygame.math.Vector2(self.rect.center)
