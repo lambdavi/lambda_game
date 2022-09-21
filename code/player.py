@@ -4,7 +4,7 @@ from support import *
 from timer import Timer
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, group, collision_sprites, tree_sprites):
+    def __init__(self, pos, group, collision_sprites, tree_sprites, interaction):
         super().__init__(group)
 
         # ! IMPORTANT !
@@ -44,11 +44,22 @@ class Player(pygame.sprite.Sprite):
         self.seed_index = 0
         self.selected_seed = self.seeds[self.seed_index]
 
+        # inventory
+        self.item_inventory = {
+            'wood':   0,
+            'apple':  0,
+            'corn':   0,
+            'tomato': 0
+        }
+
         # interaction
         self.tree_sprites = tree_sprites
+        self.interaction = interaction
+        self.sleep = False
 
     def get_target_pos(self):
         self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
+    
     def use_tool(self):
         if self.selected_tool == 'hoe' or self.selected_tool == 'water':
             pass
@@ -84,7 +95,7 @@ class Player(pygame.sprite.Sprite):
     def input(self):
         keys = pygame.key.get_pressed() # returns the list of pressed keys 
         
-        if not self.timers['tool use'].active: # to prevent moving while using tools
+        if not self.timers['tool use'].active and not self.sleep: # to prevent moving while using tools
             # DIRECTIONS
             # Vertical Movement
             if keys[pygame.K_UP]:
@@ -131,7 +142,17 @@ class Player(pygame.sprite.Sprite):
                 self.seed_index += 1
                 self.seed_index = self.seed_index if self.seed_index < len(self.seeds) else 0
                 self.selected_seed = self.seeds[self.seed_index]
-                
+            
+            # INTERACTIONS
+            if keys[pygame.K_RETURN]:
+                collided_interaction_sprite = pygame.sprite.spritecollide(self, self.interaction, False)
+                if collided_interaction_sprite:
+                    if collided_interaction_sprite[0].name == 'Trader':
+                        pass
+                    else:
+                        self.status = 'left_idle'
+                        self.sleep = True
+               
     def get_status(self):
         # IDLE MANAGEMENT
         # If the player is not moving -> add_idle to status
