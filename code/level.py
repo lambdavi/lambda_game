@@ -9,6 +9,7 @@ from transition import Transition
 from soil import SoilLayer
 from sky import Rain, Sky
 from random import randint
+from menu import Menu
 class Level:
 	def __init__(self):
 		# get the display surface, so we can draw directly on the main display
@@ -30,6 +31,11 @@ class Level:
 		self.raining = randint(0,10) > 7
 		self.soil_layer.raining = self.raining
 		self.sky = Sky()
+
+		# shop
+		self.shop_active = False
+		self.menu=Menu(self.player, self.toggle_shop)
+
 		
 	def setup(self):
 		tmx_data = load_pygame("../data/map.tmx")
@@ -77,8 +83,12 @@ class Level:
 					collision_sprites = self.collision_sprites,
 					tree_sprites = self.tree_sprites,
 					interaction = self.interaction_sprites,
-					soil_layer = self.soil_layer)
+					soil_layer = self.soil_layer,
+					toggle_shop = self.toggle_shop)
 			if obj.name == 'Bed':
+				Interaction((obj.x, obj.y), (obj.width, obj.height), self.interaction_sprites, obj.name)
+
+			if obj.name == 'Trader':
 				Interaction((obj.x, obj.y), (obj.width, obj.height), self.interaction_sprites, obj.name)
 		
 		Generic(
@@ -122,18 +132,28 @@ class Level:
 	def player_add(self, item, qty = 1):
 		self.player.item_inventory[item] += qty
 
+	def toggle_shop(self):
+		self.shop_active = not self.shop_active
+
+
 	def run(self,dt):
+
+		# drawing logic
 		self.display_surface.fill('black')
 		self.all_sprites.custom_draw(self.player)
-		self.all_sprites.update(dt) # this method calls every update method on childs of the group
-		self.plant_collision()
+		
+		# updates
+		if self.shop_active:
+			self.menu.update()
+		else:
+			self.all_sprites.update(dt) # this method calls every update method on childs of the group
+			self.plant_collision()
+		
 		self.overlay.display()
 		
-		#rain
-		if self.raining:
+		# weather
+		if self.raining and not self.shop_active:
 			self.rain.update()
-
-		#daytime
 		self.sky.display(dt)
 
 		# transition overlay
@@ -142,7 +162,9 @@ class Level:
 
 		# sky
 		self.sky.start_color = 	[255, 255, 255]
-	
+
+
+
 class CameraGroup(pygame.sprite.Group):
 	def __init__(self):
 		super().__init__()
