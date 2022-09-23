@@ -20,7 +20,6 @@ class Interaction(Generic):
 class Water(Generic):
     def __init__(self, pos, frames, groups):
         
-
         # animation setup
         self.frames = frames
         self.frame_index = 0
@@ -63,7 +62,6 @@ class Particle(Generic):
         current_time = pygame.time.get_ticks()
         if current_time - self.start_time > self.duration:
             self.kill()
-
 
 class Tree(Generic):
     def __init__(self, pos, surf, groups, name, player_add):
