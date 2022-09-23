@@ -52,6 +52,13 @@ class Player(pygame.sprite.Sprite):
             'tomato': 0
         }
 
+        self.seed_inventory = {
+            'corn': 5,
+            'tomato': 5
+        }
+        
+        self.money = 200
+
         # interaction
         self.tree_sprites = tree_sprites
         self.interaction = interaction
@@ -209,7 +216,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.centery = self.hitbox.centery
         self.collision('vertical')
 
-    
     def update(self, dt):
         self.input()
         self.get_status()
