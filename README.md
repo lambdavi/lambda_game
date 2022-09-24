@@ -1,6 +1,12 @@
-## Lambd
+## Lambda Game
 # Requirements: 
 pygame | pytmx | python (3.7+)
+```
+$ pip3 install pygame
+```
+```
+$ pip3 install pytmx
+```
 # Installation
 First of all clone the repo.
 Then navigate to code section:
