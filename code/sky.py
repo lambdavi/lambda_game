@@ -49,7 +49,6 @@ class Rain:
         self.rain_drops = import_folder('../graphics/rain/drops/')
         self.rain_floor = import_folder('../graphics/rain/floor/')
         self.floor_w, self.floor_h = pygame.image.load('../graphics/world/ground.png').get_size()
-        print(self.rain_floor)
     def create_floor(self):
         Drop(
             surf= choice(self.rain_floor),

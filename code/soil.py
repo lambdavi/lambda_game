@@ -193,10 +193,7 @@ class SoilLayer:
 
     def check_watered(self, pos):
         cell = self.grid[pos[1] // TILE_SIZE][pos[0] // TILE_SIZE]
-        if 'W' in cell:
-            print("tes")
-            return True
-        return False
+        return 'W' in cell
 
     def plant_seed(self, target_pos, seed):
         for soil_sprite in self.soil_sprites.sprites():
