@@ -73,8 +73,6 @@ class Tree(Generic):
         self.name = name
         stump_path = f'../graphics/stumps/{"small" if name == "Small" else "large"}.png'
         self.stump_surf = pygame.image.load(stump_path).convert_alpha()
-        self.invul_timer = Timer(200)
-
         # apples
         self.apple_surf = pygame.image.load('../graphics/fruit/apple.png')
         self.apple_pos = APPLE_POS[name]
@@ -83,9 +81,16 @@ class Tree(Generic):
     
         self.player_add = player_add
 
+        # sounds
+        self.axe_sound = pygame.mixer.Sound('../audio/axe.mp3')
+
     def damage(self):
         # damaging the tree
         self.health -= 1
+
+        # play sound
+        self.axe_sound.play()
+
         # remove an apple
         if len(self.apple_sprites.sprites()) > 0: # if there are apples
             random_apple = choice(self.apple_sprites.sprites())
@@ -122,6 +127,4 @@ class Tree(Generic):
                     surf = self.apple_surf, 
                     groups = [self.apple_sprites, self.groups()[0]],
                     z = LAYERS['fruit'])
-                    # self.groups() returns the list passed to the tree object in level, the first element is the all sprites group
-                    # which we cant access to it from this file. so this is the workaround to that
-
+                   

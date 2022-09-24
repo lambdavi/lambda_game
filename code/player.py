@@ -68,6 +68,10 @@ class Player(pygame.sprite.Sprite):
         # soil
         self.soil_layer = soil_layer
 
+        # sound
+        self.watering = pygame.mixer.Sound('../audio/water.mp3')
+        self.watering.set_volume(0.1)
+
     def get_target_pos(self):
         self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
     
@@ -81,6 +85,7 @@ class Player(pygame.sprite.Sprite):
                     tree.damage()
 
         if self.selected_tool == 'water':
+            self.watering.play()
             self.soil_layer.water(self.target_pos)
     
     def use_seed(self):

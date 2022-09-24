@@ -72,7 +72,13 @@ class SoilLayer:
         self.water_surfs = import_folder('../graphics/soil_water')
         self.create_soil_grid()
         self.create_hit_rects()
-    
+
+        # sounds
+        self.hoe_sound = pygame.mixer.Sound('../audio/hoe.wav')
+        self.hoe_sound.set_volume(0.1)
+        self.plant_sound = pygame.mixer.Sound('../audio/plant.wav')
+        self.plant_sound.set_volume(0.1)
+
     def create_soil_grid(self):
         ground = pygame.image.load('../graphics/world/ground.png')
         # getting the total number of tiles
@@ -95,6 +101,7 @@ class SoilLayer:
     def get_hit(self, point):
         for rect in self.hit_rects:
             if rect.collidepoint(point):
+                self.hoe_sound.play()
                 x = rect.x // TILE_SIZE
                 y = rect.y // TILE_SIZE
                 if 'F' in self.grid[y][x]:
@@ -197,6 +204,7 @@ class SoilLayer:
                 x = soil_sprite.rect.x // TILE_SIZE
                 y = soil_sprite.rect.y // TILE_SIZE
                 if 'P' not in self.grid[y][x]:
+                    self.plant_sound.play()
                     self.grid[y][x].append('P') # planted
                     Plant(seed, [self.all_sprites, self.plant_sprites, self.collision_sprites], soil_sprite, self.check_watered)
 
