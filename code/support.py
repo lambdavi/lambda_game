@@ -1,5 +1,4 @@
 import os
-from traceback import print_tb
 import pygame
 def import_folder(path):
     surface_list = [] # we are going to store all the surfaces (we are gonna return it)
