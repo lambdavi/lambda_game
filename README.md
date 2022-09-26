@@ -18,4 +18,5 @@ and execute the code:
 $ python3.7 main.py
 ```
 
-# Screenshots
+# Copyright
+The project has been developed following the youtube course offered by 'Clear Code'.
