@@ -17,7 +17,7 @@ and execute the code:
 ```
 $ python3.7 main.py
 ```
-![alt text]((https://github.com/lambdavi/lambda_game/blob/main/data/Stardew-Valley-Article-2.jpg?raw=true)
+![alt text](https://github.com/lambdavi/lambda_game/blob/main/data/Stardew-Valley-Article-2.jpg?raw=true)
 
 # Copyright
 The project has been developed following the youtube course offered by 'Clear Code'.
