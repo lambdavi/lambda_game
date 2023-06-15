@@ -17,6 +17,7 @@ and execute the code:
 ```
 $ python3.7 main.py
 ```
+![data/Stardew-Valley-Article-2.jpg](data:image/png;base64,<BASE64_HERE>)
 
 # Copyright
 The project has been developed following the youtube course offered by 'Clear Code'.
